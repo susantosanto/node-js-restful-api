@@ -8,10 +8,10 @@ const create = async (data) => {
 
 const findById = async (username, contactId) => {
     return prismaClient.contact.findFirst({
-       where: {
-           username: username,
-           id: contactId
-       }
+        where: {
+            username: username,
+            id: contactId
+        }
     });
 }
 
@@ -26,7 +26,7 @@ const contactCount = async (username, contactId) => {
 
 const update = async (contactId, data) => {
     return prismaClient.contact.update({
-        where : {
+        where: {
             id: contactId
         },
         data: data
@@ -47,11 +47,32 @@ const search = async (conditions) => {
     });
 }
 
+const getAll = async (username, page, size) => {
+    const skip = (page - 1) * size;
+    return prismaClient.contact.findMany({
+        where: {
+            username: username
+        },
+        take: size,
+        skip: skip
+    });
+}
+
+const countContacts = async (username) => {
+    return prismaClient.contact.count({
+        where: {
+            username: username
+        }
+    });
+}
+
 export default {
     create,
     findById,
     contactCount,
     update,
     remove,
-    search
+    search,
+    getAll,
+    countContacts,
 }

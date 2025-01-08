@@ -21,11 +21,17 @@ const searchContactValidation = Joi.object({
     name: Joi.string().optional(),
     email: Joi.string().optional(),
     phone: Joi.string().optional(),
+});
+
+const paggingValidation = Joi.object({
+    page: Joi.number().positive().optional(),
+    size: Joi.number().positive().optional()
 })
 
 export {
-   createContactValidation,
-   updateValidation,
-   getContactValidation,
-    searchContactValidation
+    createContactValidation,
+    updateValidation,
+    getContactValidation,
+    searchContactValidation,
+    paggingValidation,
 }

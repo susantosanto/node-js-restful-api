@@ -79,10 +79,29 @@ const searchController = async (req, res, next) => {
     }
 }
 
+const listContactController = async (req, res, next) => {
+    try {
+        const username = req.user.username;
+        const request = {
+            page: req.query.page,
+            size: req.query.size,
+        }
+
+        const result = await contactService.listContact(username, request);
+        res.status(200).json({
+            message: "success list contact",
+            data: result
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
 export default {
     createContactController,
     getContactController,
     updateContactController,
     deleteContactController,
-    searchController
+    searchController,
+    listContactController
 }

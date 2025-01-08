@@ -2,7 +2,7 @@ import contactRepository from "../repository/contact-repository.js";
 import {validate} from "../validation/validate.js";
 import {
     createContactValidation,
-    getContactValidation,
+    getContactValidation, paggingValidation,
     searchContactValidation,
     updateValidation
 } from "../validation/contact-validation.js";
@@ -52,10 +52,33 @@ const searchContact = async (username, request) => {
     return contactRepository.search(conditions);
 }
 
+const listContact = async (username, request) => {
+    request = validate(paggingValidation, request);
+
+    const page = parseInt(request.page) || 1;
+    const size = parseInt(request.size) || 10;
+
+    const totalItems = await contactRepository.countContacts(username);
+    const contacts = await contactRepository.getAll(username,page, size);
+
+    const totalPage = Math.ceil(totalItems / size);
+
+    return {
+        data: contacts,
+        pagination: {
+            currentPage: page,
+            pageSize: size,
+            totalItems: totalItems,
+            totalPage: totalPage
+        }
+    }
+}
+
 export default {
     createContact,
     getContactById,
     updateContact,
     removeContact,
-    searchContact
+    searchContact,
+    listContact
 }
