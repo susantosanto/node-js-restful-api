@@ -1,8 +1,13 @@
 import contactRepository from "../repository/contact-repository.js";
 import {validate} from "../validation/validate.js";
-import {createContactValidation, getContactValidation, updateValidation} from "../validation/contact-validation.js";
+import {
+    createContactValidation,
+    getContactValidation,
+    searchContactValidation,
+    updateValidation
+} from "../validation/contact-validation.js";
 import {ResponseError} from "../error/response-error.js";
-
+import {searchConditions} from "../helper/search-conditions.js";
 const createContact = async (username, request) => {
     const contact = validate(createContactValidation, request);
     contact.username = username;
@@ -39,9 +44,18 @@ const removeContact = async (username, contactId) => {
     return contactRepository.remove(parseInt(contactId));
 }
 
+const searchContact = async (username, request) => {
+    request = validate(searchContactValidation, request);
+
+    const conditions = searchConditions(username, request);
+
+    return contactRepository.search(conditions);
+}
+
 export default {
     createContact,
     getContactById,
     updateContact,
     removeContact,
+    searchContact
 }

@@ -22,7 +22,7 @@ const getAddressByIdController = async (req, res, next) => {
         const contactId = req.params.contactId;
         const addressId = req.params.addressId;
 
-        const result = await addressService.getAddressById(username,contactId, addressId);
+        const result = await addressService.getAddressById(username, contactId, addressId);
         res.status(200).json({
             message: 'Successfully getting address',
             data: result

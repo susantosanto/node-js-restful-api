@@ -41,10 +41,17 @@ const remove = async (contactId) => {
     });
 }
 
+const search = async (conditions) => {
+    return prismaClient.contact.findMany({
+        where: conditions
+    });
+}
+
 export default {
     create,
     findById,
     contactCount,
     update,
-    remove
+    remove,
+    search
 }

@@ -51,9 +51,28 @@ const deleteContactController = async (req, res, next) => {
     try {
         const contactId = req.params.contactId;
         const username = req.user.username;
-        const result = await contactService.removeContact(username, contactId);
+        await contactService.removeContact(username, contactId);
         res.status(200).json({
             message: "success delete contact",
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const searchController = async (req, res, next) => {
+    try {
+        const username = req.user.username;
+        const request = {
+            name: req.query.name,
+            email: req.query.email,
+            phone: req.query.phone
+        }
+
+        const result = await contactService.search(username, request);
+        res.status(200).json({
+            message: "success searching contact",
+            data: result,
         });
     } catch (error) {
         next(error);
@@ -65,4 +84,5 @@ export default {
     getContactController,
     updateContactController,
     deleteContactController,
+    searchController
 }

@@ -17,8 +17,15 @@ const updateValidation = Joi.object({
     phone: Joi.string().max(50).optional(),
 });
 
+const searchContactValidation = Joi.object({
+    name: Joi.string().optional(),
+    email: Joi.string().optional(),
+    phone: Joi.string().optional(),
+})
+
 export {
    createContactValidation,
    updateValidation,
-   getContactValidation
+   getContactValidation,
+    searchContactValidation
 }

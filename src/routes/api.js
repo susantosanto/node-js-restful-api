@@ -10,6 +10,7 @@ userRouter.post("/api/contact", contactController.createContactController);
 userRouter.get("/api/contact/:contactId", contactController.getContactController);
 userRouter.put("/api/contact/:contactId", contactController.updateContactController);
 userRouter.delete("/api/contact/:contactId", contactController.deleteContactController);
+userRouter.get('/api/contact', contactController.searchController);
 
 // Address API
 userRouter.post("/api/contact/:contactId/address", addressController.createAddressController);
